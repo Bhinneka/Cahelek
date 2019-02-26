@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.bhinneka.cahelek.modules.order.domain;
+package com.bhinneka.cahelek.modules.order.domain.state;
+
+import com.bhinneka.cahelek.modules.order.domain.Order;
 
 /**
  *
  * @author wurianto
  */
-public enum Status {
-    
-    Created,
-    Pending,
-    Paid,
-    Delivered,
-    
+public interface State {
+
+    public void next(Order order);
+
+    public void prev(Order order);
+
 }

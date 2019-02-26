@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.bhinneka.cahelek.modules.order.domain.state;
 
-package com.bhinneka.cahelek.modules.order.domain;
+import com.bhinneka.cahelek.modules.order.domain.Order;
+import com.bhinneka.cahelek.modules.order.domain.Status;
 
 /**
  *
  * @author wurianto
  */
-public enum Status {
-    
-    Created,
-    Pending,
-    Paid,
-    Delivered,
-    
+public class CreatedState implements State {
+
+    public void next(Order order) {
+        order.setStatus(Status.Pending);
+    }
+
+    public void prev(Order order) {
+        order.setStatus(Status.Created);
+    }
+
 }
