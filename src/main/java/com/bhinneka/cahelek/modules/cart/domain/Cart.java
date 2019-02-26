@@ -17,6 +17,7 @@
 package com.bhinneka.cahelek.modules.cart.domain;
 
 import com.bhinneka.cahelek.modules.product.domain.Product;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,14 +27,15 @@ import java.util.Map;
 public class Cart {
 
     private Integer id;
-    private Map<Integer, Item> items;
+    private final Map<Integer, Item> items;
 
     public Cart() {
+        this.items = new HashMap<Integer, Item>();
     }
 
-    public Cart(Integer id, Map<Integer, Item> items) {
+    public Cart(Integer id) {
         this.id = id;
-        this.items = items;
+        this.items = new HashMap<Integer, Item>();
     }
 
     public void addOrUpdateItem(int itemId, Product product, int quantity) {
