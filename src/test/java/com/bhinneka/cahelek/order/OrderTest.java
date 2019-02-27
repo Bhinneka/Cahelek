@@ -13,32 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.bhinneka.cahelek.order;
 
 import com.bhinneka.cahelek.modules.cart.domain.Cart;
 import com.bhinneka.cahelek.modules.order.domain.Billing;
 import com.bhinneka.cahelek.modules.order.domain.Order;
 import com.bhinneka.cahelek.modules.order.domain.Status;
+import com.bhinneka.cahelek.modules.order.domain.state.StateException;
 import com.bhinneka.cahelek.modules.product.domain.Product;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static junit.framework.TestCase.*;
 
 /**
  *
  * @author wurianto
  */
-public class OrderTest extends TestCase {
+public class OrderTest {
 
-    public OrderTest(String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(OrderTest.class);
-    }
-
+    @org.junit.Test
     public void testCreateOrder() {
         Product samsung = new Product(1, "Samsung Galaxy s2", 5000000.0);
         Product nokia = new Product(2, "Nokia 6", 2500000.0);
@@ -48,12 +41,13 @@ public class OrderTest extends TestCase {
         cart.addOrUpdateItem(1, nokia, 2);
 
         assertEquals(5000000.0, cart.getTotal());
-        
+
         Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
-        
+
         assertEquals(Status.Created, order.getStatus());
     }
-    
+
+    @org.junit.Test
     public void testOrderSetToCheckout() {
         Product samsung = new Product(1, "Samsung Galaxy s2", 5000000.0);
         Product nokia = new Product(2, "Nokia 6", 2500000.0);
@@ -63,15 +57,152 @@ public class OrderTest extends TestCase {
         cart.addOrUpdateItem(1, nokia, 2);
 
         assertEquals(5000000.0, cart.getTotal());
-        
+
         Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
-        
-        //set to pending
-        order.nextState();
-        
+
+        try {
+            //set to pending
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         assertEquals(Status.Pending, order.getStatus());
+
     }
-    
-    
+
+    @org.junit.Test
+    public void testOrderSetToPaid() {
+        Product samsung = new Product(1, "Samsung Galaxy s2", 5000000.0);
+        Product nokia = new Product(2, "Nokia 6", 2500000.0);
+
+        Cart cart = new Cart();
+        cart.setId(1);
+        cart.addOrUpdateItem(1, nokia, 2);
+
+        assertEquals(5000000.0, cart.getTotal());
+
+        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+
+        try {
+            //set to pending
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            //set to paid
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        assertEquals(Status.Paid, order.getStatus());
+
+    }
+
+    @org.junit.Test
+    public void testOrderSetToDelivered() {
+        Product samsung = new Product(1, "Samsung Galaxy s2", 5000000.0);
+        Product nokia = new Product(2, "Nokia 6", 2500000.0);
+
+        Cart cart = new Cart();
+        cart.setId(1);
+        cart.addOrUpdateItem(1, nokia, 2);
+
+        assertEquals(5000000.0, cart.getTotal());
+
+        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+
+        try {
+            //set to pending
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            //set to paid
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            //set to delivered
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        assertEquals(Status.Delivered, order.getStatus());
+
+    }
+
+    @org.junit.Test
+    public void testOrderSetToCreatedAndFail() {
+
+        Product samsung = new Product(1, "Samsung Galaxy s2", 5000000.0);
+        Product nokia = new Product(2, "Nokia 6", 2500000.0);
+
+        Cart cart = new Cart();
+        cart.setId(1);
+        cart.addOrUpdateItem(1, nokia, 2);
+
+        assertEquals(5000000.0, cart.getTotal());
+
+        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+
+        try {
+            order.previousState();
+        } catch (StateException ex) {
+            assertEquals(ex.getMessage(), "this order in its root state");
+        }
+
+    }
+
+    @org.junit.Test
+    public void testOrderSetToDeliveredAndFail() {
+        Product samsung = new Product(1, "Samsung Galaxy s2", 5000000.0);
+        Product nokia = new Product(2, "Nokia 6", 2500000.0);
+
+        Cart cart = new Cart();
+        cart.setId(1);
+        cart.addOrUpdateItem(1, nokia, 2);
+
+        assertEquals(5000000.0, cart.getTotal());
+
+        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+
+        try {
+            //set to pending
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            //set to paid
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            //set to delivered
+            order.nextState();
+        } catch (StateException ex) {
+            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            //set to delivered again
+            order.nextState();
+        } catch (StateException ex) {
+            assertEquals(ex.getMessage(), "this order already delivered");
+        }
+
+    }
 
 }
