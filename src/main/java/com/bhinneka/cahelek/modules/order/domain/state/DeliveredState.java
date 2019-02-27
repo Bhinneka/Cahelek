@@ -25,12 +25,13 @@ import com.bhinneka.cahelek.modules.order.domain.Status;
  */
 public class DeliveredState implements State {
 
-    public void next(Order order) {
-        order.setStatus(Status.Delivered);
+    public void next(Order order) throws StateException {
+       throw new StateException("this order already delivered");  
     }
 
     public void prev(Order order) {
         order.setStatus(Status.Paid);
+        order.setState(new PaidState());
     }
     
 }

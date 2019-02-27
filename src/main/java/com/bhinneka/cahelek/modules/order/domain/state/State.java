@@ -24,8 +24,8 @@ import com.bhinneka.cahelek.modules.order.domain.Order;
  */
 public interface State {
 
-    public void next(Order order);
+    public void next(Order order) throws StateException;
 
-    public void prev(Order order);
+    public void prev(Order order) throws StateException;
 
 }

@@ -27,10 +27,12 @@ public class PendingState implements State {
 
     public void next(Order order) {
         order.setStatus(Status.Paid);
+        order.setState(new PaidState());
     }
 
     public void prev(Order order) {
         order.setStatus(Status.Created);
+        order.setState(new CreatedState());
     }
     
 }

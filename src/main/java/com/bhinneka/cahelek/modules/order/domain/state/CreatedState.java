@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.bhinneka.cahelek.modules.order.domain.state;
 
 import com.bhinneka.cahelek.modules.order.domain.Order;
@@ -26,10 +27,11 @@ public class CreatedState implements State {
 
     public void next(Order order) {
         order.setStatus(Status.Pending);
+        order.setState(new PendingState());
     }
 
-    public void prev(Order order) {
-        order.setStatus(Status.Created);
+    public void prev(Order order) throws StateException{
+        throw new StateException("this order in its root state");
     }
 
 }
