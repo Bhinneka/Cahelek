@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.bhinneka.cahelek.modules.order.domain;
 
 import com.bhinneka.cahelek.modules.order.domain.state.State;
 import com.bhinneka.cahelek.modules.cart.domain.Cart;
 import com.bhinneka.cahelek.modules.order.domain.state.CreatedState;
+import com.bhinneka.cahelek.modules.order.domain.state.StateException;
 
 /**
  *
@@ -43,15 +43,26 @@ public class Order {
         this.status = Status.Created;
         this.state = new CreatedState();
     }
-    
-    public void nextState() {
+
+    // process to next state
+    public void nextState() throws StateException {
         this.state.next(this);
     }
-    
-    public void previousState() {
+
+    // process to previous state
+    public void previousState() throws StateException {
         this.state.prev(this);
     }
-    
+
+    // show current state
+    public State currentState() {
+        return this.state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public Double getTotal() {
         return this.cart.getTotal() + this.billing.getShippingCost();
     }

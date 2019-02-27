@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.bhinneka.cahelek.modules.cart.domain;
 
 import com.bhinneka.cahelek.modules.product.domain.Product;
@@ -23,14 +22,14 @@ import com.bhinneka.cahelek.modules.product.domain.Product;
  * @author wurianto
  */
 public class Item {
-    
+
     private Integer id;
     private Product product;
     private Integer quantity;
     private Double subTotal;
 
     public Item() {
-        
+
     }
 
     public Item(Integer id, Product product, Integer quantity) {
@@ -39,7 +38,7 @@ public class Item {
         this.quantity = quantity;
         this.subTotal = quantity * product.getPrice();
     }
-    
+
     public void update(int quantity, Product product) {
         this.quantity = quantity;
         this.product = product;
@@ -58,15 +57,13 @@ public class Item {
         return quantity;
     }
 
-
     public Double getSubTotal() {
         return subTotal;
-    }  
+    }
 
     @Override
     public String toString() {
         return "Item{" + "id=" + id + ", product=" + product + ", quantity=" + quantity + ", subTotal=" + subTotal + '}';
     }
-    
-    
+
 }

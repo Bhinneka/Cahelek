@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.bhinneka.cahelek.modules.cart.domain;
 
 import com.bhinneka.cahelek.modules.product.domain.Product;
@@ -48,7 +47,7 @@ public class Cart {
         }
 
     }
-    
+
     public Item getItem(int itemId) {
         Item item = null;
         if (this.items.containsKey(itemId)) {
@@ -56,10 +55,18 @@ public class Cart {
         }
         return item;
     }
-    
+
+    public Item removeItem(int itemId) {
+        Item item = null;
+        if (this.items.containsKey(itemId)) {
+            item = this.items.remove(itemId);
+        }
+        return item;
+    }
+
     public Double getTotal() {
         double total = 0.0;
-        for(Item v : this.items.values()) {
+        for (Item v : this.items.values()) {
             total += v.getSubTotal();
         }
         return total;
