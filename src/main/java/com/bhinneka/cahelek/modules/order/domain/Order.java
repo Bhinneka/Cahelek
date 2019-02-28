@@ -36,9 +36,13 @@ public class Order {
 
     }
 
-    public Order(Integer id, Cart cart, Billing billing) {
+    public Order(Integer id, Cart cart, Billing billing) throws StateException {
         this.id = id;
         this.cart = cart;
+        
+        // set cart to next state (checkouted)
+        this.cart.nextState();
+        
         this.billing = billing;
         this.status = Status.Created;
         this.state = new CreatedState();
