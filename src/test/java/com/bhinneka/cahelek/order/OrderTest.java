@@ -21,8 +21,6 @@ import com.bhinneka.cahelek.modules.order.domain.Order;
 import com.bhinneka.cahelek.modules.order.domain.Status;
 import com.bhinneka.cahelek.modules.state.StateException;
 import com.bhinneka.cahelek.modules.product.domain.Product;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static junit.framework.TestCase.*;
 
 /**
@@ -42,9 +40,16 @@ public class OrderTest {
 
         assertEquals(5000000.0, cart.getTotal());
 
-        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+        try {
+            Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            assertEquals(Status.Created, order.getStatus());
 
-        assertEquals(Status.Created, order.getStatus());
+            // assert if cart already checkedout
+            assertEquals(com.bhinneka.cahelek.modules.cart.domain.Status.Checkedout, cart.getStatus());
+        } catch (StateException ex) {
+            assertNull(ex);
+        }
+
     }
 
     @org.junit.Test
@@ -58,16 +63,14 @@ public class OrderTest {
 
         assertEquals(5000000.0, cart.getTotal());
 
-        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
-
         try {
+            Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
             //set to pending
             order.nextState();
+            assertEquals(Status.Pending, order.getStatus());
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertNull(ex);
         }
-
-        assertEquals(Status.Pending, order.getStatus());
 
     }
 
@@ -82,23 +85,35 @@ public class OrderTest {
 
         assertEquals(5000000.0, cart.getTotal());
 
-        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+        Order order = null;
+        try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
+        } catch (StateException ex) {
+            assertNull(ex);
+        }
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to pending
             order.nextState();
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertNull(ex);
         }
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to paid
             order.nextState();
+            assertEquals(Status.Paid, order.getStatus());
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertNull(ex);
         }
-
-        assertEquals(Status.Paid, order.getStatus());
 
     }
 
@@ -113,30 +128,40 @@ public class OrderTest {
 
         assertEquals(5000000.0, cart.getTotal());
 
-        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+        Order order = null;
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to pending
             order.nextState();
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertNull(ex);
         }
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to paid
             order.nextState();
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertNull(ex);
         }
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to delivered
             order.nextState();
-        } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        assertEquals(Status.Delivered, order.getStatus());
+            assertEquals(Status.Delivered, order.getStatus());
+
+        } catch (StateException ex) {
+            assertNull(ex);
+        }
 
     }
 
@@ -152,12 +177,19 @@ public class OrderTest {
 
         assertEquals(5000000.0, cart.getTotal());
 
-        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+        Order order = null;
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             order.previousState();
         } catch (StateException ex) {
+
+            assertNotNull(ex);
+
             assertEquals(ex.getMessage(), "this order in its root state");
+
         }
 
     }
@@ -173,34 +205,53 @@ public class OrderTest {
 
         assertEquals(5000000.0, cart.getTotal());
 
-        Order order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+        Order order = null;
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to pending
             order.nextState();
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+
+            assertNull(ex);
+
         }
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to paid
             order.nextState();
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertNull(ex);
         }
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to delivered
             order.nextState();
         } catch (StateException ex) {
-            Logger.getLogger(OrderTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertNull(ex);
         }
 
         try {
+            if (order == null) {
+                order = new Order(1, cart, new Billing("Wuriyanto", "Banjarnegara", 15000.0));
+            }
             //set to delivered again
             order.nextState();
+
         } catch (StateException ex) {
+
+            assertNotNull(ex);
+
             assertEquals(ex.getMessage(), "this order already delivered");
+
         }
 
     }

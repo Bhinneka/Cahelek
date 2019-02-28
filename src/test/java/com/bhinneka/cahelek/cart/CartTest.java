@@ -17,7 +17,9 @@ package com.bhinneka.cahelek.cart;
 
 import com.bhinneka.cahelek.modules.cart.domain.Cart;
 import com.bhinneka.cahelek.modules.cart.domain.Item;
+import com.bhinneka.cahelek.modules.cart.domain.Status;
 import com.bhinneka.cahelek.modules.product.domain.Product;
+import com.bhinneka.cahelek.modules.state.StateException;
 import static junit.framework.TestCase.*;
 
 /**
@@ -35,6 +37,49 @@ public class CartTest {
         cart.addOrUpdateItem(1, nokia, 2);
 
         assertEquals(5000000.0, cart.getTotal());
+
+        assertEquals(Status.Created, cart.getStatus());
+
+        try {
+            cart.previousState();
+        } catch (StateException ex) {
+
+            assertNotNull(ex);
+
+            assertEquals(ex.getMessage(), "this cart in its root state");
+
+        }
+    }
+
+    @org.junit.Test
+    public void testCartCheckedout() {
+        Product nokia = new Product(2, "Nokia 6", 2500000.0);
+
+        Cart cart = new Cart();
+        cart.setId(1);
+        cart.addOrUpdateItem(1, nokia, 2);
+
+        assertEquals(5000000.0, cart.getTotal());
+
+        assertEquals(Status.Created, cart.getStatus());
+
+        try {
+            cart.nextState();
+        } catch (StateException ex) {
+            assertNull(ex);
+        }
+
+        assertEquals(Status.Checkedout, cart.getStatus());
+
+        try {
+            cart.nextState();
+        } catch (StateException ex) {
+
+            assertNotNull(ex);
+
+            assertEquals(ex.getMessage(), "this cart already checkedout");
+
+        }
     }
 
     @org.junit.Test
