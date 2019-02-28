@@ -34,14 +34,14 @@ public class Cart {
     private State state;
 
     public Cart() {
-        this.items = new HashMap<Integer, Item>();
+        this.items = new HashMap<>();
         this.status = Status.Created;
         this.state = new CreatedState();
     }
 
     public Cart(Integer id) {
         this.id = id;
-        this.items = new HashMap<Integer, Item>();
+        this.items = new HashMap<>();
         this.status = Status.Created;
         this.state = new CreatedState();
     }
@@ -93,11 +93,7 @@ public class Cart {
     }
 
     public Double getTotal() {
-        double total = 0.0;
-        for (Item v : this.items.values()) {
-            total += v.getSubTotal();
-        }
-        return total;
+        return this.items.values().stream().map((Item t) -> t.getSubTotal()).reduce(0.0, (Double t, Double u) -> t + u);
     }
 
     public Integer getId() {
