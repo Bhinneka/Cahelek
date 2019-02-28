@@ -1,7 +1,7 @@
 
 ### Cahelek
 
-Implementing Order domain using Java and State Pattern
+Mini framework for Implementing Order domain using Java and State Pattern
 
 ## Getting started
 
