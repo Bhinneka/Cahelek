@@ -15,10 +15,10 @@
  */
 package com.bhinneka.cahelek.modules.order.domain;
 
-import com.bhinneka.cahelek.modules.order.domain.state.State;
+import com.bhinneka.cahelek.modules.state.State;
 import com.bhinneka.cahelek.modules.cart.domain.Cart;
 import com.bhinneka.cahelek.modules.order.domain.state.CreatedState;
-import com.bhinneka.cahelek.modules.order.domain.state.StateException;
+import com.bhinneka.cahelek.modules.state.StateException;
 
 /**
  *

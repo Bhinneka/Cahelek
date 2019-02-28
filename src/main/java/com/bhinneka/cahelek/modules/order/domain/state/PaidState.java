@@ -16,6 +16,7 @@
 
 package com.bhinneka.cahelek.modules.order.domain.state;
 
+import com.bhinneka.cahelek.modules.state.State;
 import com.bhinneka.cahelek.modules.order.domain.Order;
 import com.bhinneka.cahelek.modules.order.domain.Status;
 
@@ -23,7 +24,7 @@ import com.bhinneka.cahelek.modules.order.domain.Status;
  *
  * @author wurianto
  */
-public class PaidState implements State {
+public class PaidState implements State<Order> {
 
     public void next(Order order) {
         order.setStatus(Status.Delivered);

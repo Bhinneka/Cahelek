@@ -16,6 +16,8 @@
 
 package com.bhinneka.cahelek.modules.order.domain.state;
 
+import com.bhinneka.cahelek.modules.state.StateException;
+import com.bhinneka.cahelek.modules.state.State;
 import com.bhinneka.cahelek.modules.order.domain.Order;
 import com.bhinneka.cahelek.modules.order.domain.Status;
 
@@ -23,7 +25,7 @@ import com.bhinneka.cahelek.modules.order.domain.Status;
  *
  * @author wurianto
  */
-public class DeliveredState implements State {
+public class DeliveredState implements State<Order> {
 
     public void next(Order order) throws StateException {
        throw new StateException("this order already delivered");  

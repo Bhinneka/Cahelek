@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package com.bhinneka.cahelek.modules.order.domain.state;
-
-import com.bhinneka.cahelek.modules.order.domain.Order;
+package com.bhinneka.cahelek.modules.state;
 
 /**
  *
  * @author wurianto
+ * @param <T>
  */
-public interface State {
+public interface State<T> {
 
-    public void next(Order order) throws StateException;
+    public void next(T t) throws StateException;
 
-    public void prev(Order order) throws StateException;
+    public void prev(T t) throws StateException;
 
 }

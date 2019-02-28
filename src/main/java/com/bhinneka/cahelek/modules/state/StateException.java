@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bhinneka.cahelek.modules.order.domain.state;
+package com.bhinneka.cahelek.modules.state;
 
 /**
  *

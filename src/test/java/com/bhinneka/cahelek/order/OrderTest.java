@@ -19,7 +19,7 @@ import com.bhinneka.cahelek.modules.cart.domain.Cart;
 import com.bhinneka.cahelek.modules.order.domain.Billing;
 import com.bhinneka.cahelek.modules.order.domain.Order;
 import com.bhinneka.cahelek.modules.order.domain.Status;
-import com.bhinneka.cahelek.modules.order.domain.state.StateException;
+import com.bhinneka.cahelek.modules.state.StateException;
 import com.bhinneka.cahelek.modules.product.domain.Product;
 import java.util.logging.Level;
 import java.util.logging.Logger;
