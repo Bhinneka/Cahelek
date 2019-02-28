@@ -15,7 +15,10 @@
  */
 package com.bhinneka.cahelek.modules.cart.domain;
 
+import com.bhinneka.cahelek.modules.cart.domain.state.CreatedState;
 import com.bhinneka.cahelek.modules.product.domain.Product;
+import com.bhinneka.cahelek.modules.state.State;
+import com.bhinneka.cahelek.modules.state.StateException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,14 +30,39 @@ public class Cart {
 
     private Integer id;
     private final Map<Integer, Item> items;
+    private Status status;
+    private State state;
 
     public Cart() {
         this.items = new HashMap<Integer, Item>();
+        this.status = Status.Created;
+        this.state = new CreatedState();
     }
 
     public Cart(Integer id) {
         this.id = id;
         this.items = new HashMap<Integer, Item>();
+        this.status = Status.Created;
+        this.state = new CreatedState();
+    }
+
+    // process to next state
+    public void nextState() throws StateException {
+        this.state.next(this);
+    }
+
+    // process to previous state
+    public void previousState() throws StateException {
+        this.state.prev(this);
+    }
+
+    // show current state
+    public State currentState() {
+        return this.state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public void addOrUpdateItem(int itemId, Product product, int quantity) {
@@ -82,6 +110,14 @@ public class Cart {
 
     public Map<Integer, Item> getItems() {
         return items;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
 }
