@@ -27,10 +27,12 @@ import com.bhinneka.cahelek.modules.order.domain.Status;
  */
 public class DeliveredState implements State<Order> {
 
+    @Override
     public void next(Order order) throws StateException {
        throw new StateException("this order already delivered");  
     }
 
+    @Override
     public void prev(Order order) {
         order.setStatus(Status.Paid);
         order.setState(new PaidState());

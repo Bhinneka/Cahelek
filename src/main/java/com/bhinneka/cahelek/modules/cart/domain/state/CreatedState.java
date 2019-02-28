@@ -26,11 +26,13 @@ import com.bhinneka.cahelek.modules.state.StateException;
  */
 public class CreatedState implements State<Cart> {
 
+    @Override
     public void next(Cart cart) {
         cart.setStatus(Status.Checkedout);
         cart.setState(new CheckedoutState());
     }
 
+    @Override
     public void prev(Cart cart) throws StateException {
         throw new StateException("this cart in its root state");
     }

@@ -27,11 +27,13 @@ import com.bhinneka.cahelek.modules.order.domain.Status;
  */
 public class CreatedState implements State<Order> {
 
+    @Override
     public void next(Order order) {
         order.setStatus(Status.Pending);
         order.setState(new PendingState());
     }
 
+    @Override
     public void prev(Order order) throws StateException{
         throw new StateException("this order in its root state");
     }

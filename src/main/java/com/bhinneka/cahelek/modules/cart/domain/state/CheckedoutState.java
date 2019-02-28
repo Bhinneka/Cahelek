@@ -26,10 +26,12 @@ import com.bhinneka.cahelek.modules.state.StateException;
  */
 public class CheckedoutState implements State<Cart> {
 
+    @Override
     public void next(Cart cart) throws StateException {
         throw new StateException("this cart already checkedout");
     }
 
+    @Override
     public void prev(Cart cart) throws StateException {
         cart.setStatus(Status.Created);
         cart.setState(new CreatedState());

@@ -26,11 +26,13 @@ import com.bhinneka.cahelek.modules.order.domain.Status;
  */
 public class PaidState implements State<Order> {
 
+    @Override
     public void next(Order order) {
         order.setStatus(Status.Delivered);
         order.setState(new DeliveredState());
     }
 
+    @Override
     public void prev(Order order) {
         order.setStatus(Status.Pending);
         order.setState(new PendingState());
